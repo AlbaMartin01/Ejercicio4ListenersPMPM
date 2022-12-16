@@ -1,11 +1,13 @@
 package com.example.ejercicio4listeners
 
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Color
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
+import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.ejercicio4listeners.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -15,30 +17,54 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //addListenerToEditText()
+        var suma = 0
 
-        val editText = findViewById<EditText>(R.id.editText)
-        editText.addTextChangedListener(object : TextWatcher{
-                override fun afterTextChanged(p0: Editable?) {
-                    binding.textView.text = binding.editText.text
-                }
-
-                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-        })
-    }
-
-    /*private fun addListenerToEditText(){
-        binding.editText.addTextChangedListener(object : TextWatcher{
-            override fun afterTextChanged(p0: Editable?) {
-                binding.textView.text = binding.editText.text
+        findViewById<Button>(R.id.botonSumar).setOnClickListener{
+            findViewById<Button>(R.id.botonSumar).setBackgroundColor(ContextCompat.getColor(this, R.color.purple_700))
+            findViewById<Button>(R.id.botonRestar).setBackgroundColor(ContextCompat.getColor(this, R.color.purple_700))
+            if (findViewById<EditText>(R.id.editText).text.isEmpty()) {
+                Toast.makeText(this, "Escribe un número, por favor", Toast.LENGTH_LONG).show()
+            }else {
+                val val01 = findViewById<TextView>(R.id.editText).text.toString().toInt()
+                val val02 = findViewById<TextView>(R.id.textView).text.toString().toInt()
+                suma = val01 + val02
+                findViewById<TextView>(R.id.textView).text = suma.toString()
             }
+            true
+        }
 
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+        var resta = 0
 
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-        })
-    }*/
+        findViewById<Button>(R.id.botonRestar).setOnClickListener {
+            findViewById<Button>(R.id.botonSumar).setBackgroundColor(ContextCompat.getColor(this, R.color.purple_700))
+            findViewById<Button>(R.id.botonRestar).setBackgroundColor(ContextCompat.getColor(this,R.color.purple_700))
+            if (findViewById<EditText>(R.id.editText).text.isEmpty()){
+                Toast.makeText(this, "Ecribe un número, por favor", Toast.LENGTH_LONG).show()
+            } else{
+                if (findViewById<EditText>(R.id.editText).text.toString().toInt() <= findViewById<TextView>(R.id.textView).text.toString().toInt()) {
+                    val val01 = findViewById<TextView>(R.id.editText).text.toString().toInt()
+                    val val02 = findViewById<TextView>(R.id.textView).text.toString().toInt()
+                    resta = val02 - val01
+                    findViewById<TextView>(R.id.textView).text = resta.toString()
+                } else{
+                    Toast.makeText(this, "El número introducido es mayor que el número ya puesto", Toast.LENGTH_LONG).show()
+                }
+            }
+            true
+        }
+
+
+        findViewById<EditText>(R.id.editText).setOnClickListener {
+            findViewById<Button>(R.id.botonSumar).setBackgroundColor(Color.GRAY)
+            findViewById<Button>(R.id.botonRestar).setBackgroundColor(Color.GRAY)
+            true
+        }
+
+        findViewById<EditText>(R.id.editText2).setOnLongClickListener {
+            findViewById<Button>(R.id.botonSumar).setBackgroundColor(ContextCompat.getColor(this, R.color.purple_700))
+            findViewById<Button>(R.id.botonRestar).setBackgroundColor(ContextCompat.getColor(this, R.color.purple_700))
+            true
+        }
+    }
 
 }
